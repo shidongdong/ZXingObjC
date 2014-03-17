@@ -30,9 +30,6 @@
   ZXGenericGFPoly *_zero;
 }
 
-/**
- * Create a representation of GF(size) using the given primitive polynomial.
- */
 - (id)initWithPrimitive:(int)primitive size:(int)size b:(int)b {
   if (self = [super init]) {
     _primitive = primitive;
@@ -144,9 +141,6 @@
   return [[ZXGenericGFPoly alloc] initWithField:self coefficients:coefficients coefficientsLen:coefficientsLen];
 }
 
-/**
- * Implements both addition and subtraction -- they are the same in GF(size).
- */
 + (int)addOrSubtract:(int)a b:(int)b {
   return a ^ b;
 }

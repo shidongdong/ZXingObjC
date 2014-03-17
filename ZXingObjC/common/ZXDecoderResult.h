@@ -19,7 +19,6 @@
  * applies to 2D barcode formats. For now it contains the raw bytes obtained,
  * as well as a String interpretation of those bytes, if applicable.
  */
-
 @interface ZXDecoderResult : NSObject
 
 @property (nonatomic, assign, readonly) int8_t *rawBytes;

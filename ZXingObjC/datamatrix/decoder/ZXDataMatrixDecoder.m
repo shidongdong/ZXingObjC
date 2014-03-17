@@ -41,10 +41,6 @@
   return self;
 }
 
-/**
- * Convenience method that can decode a Data Matrix Code represented as a 2D array of booleans.
- * "true" is taken to mean a black module.
- */
 - (ZXDecoderResult *)decode:(BOOL **)image length:(unsigned int)length error:(NSError **)error {
   int dimension = length;
   ZXBitMatrix *bits = [[ZXBitMatrix alloc] initWithDimension:dimension];
@@ -59,11 +55,6 @@
   return [self decodeMatrix:bits error:error];
 }
 
-
-/**
- * Decodes a Data Matrix Code represented as a BitMatrix. A 1 or "true" is taken
- * to mean a black module.
- */
 - (ZXDecoderResult *)decodeMatrix:(ZXBitMatrix *)bits error:(NSError **)error {
   ZXDataMatrixBitMatrixParser *parser = [[ZXDataMatrixBitMatrixParser alloc] initWithBitMatrix:bits error:error];
   if (!parser) {
@@ -102,10 +93,13 @@
   return [ZXDataMatrixDecodedBitStreamParser decode:resultBytes length:totalBytes error:error];
 }
 
-
 /**
  * Given data and error-correction codewords received, possibly corrupted by errors, attempts to
  * correct the errors in-place using Reed-Solomon error correction.
+ *
+ * @param codewordBytes data and error correction codewords
+ * @param numDataCodewords number of codewords that are data bytes
+ * @return NO if error correction fails
  */
 - (BOOL)correctErrors:(NSMutableArray *)codewordBytes numDataCodewords:(int)numDataCodewords error:(NSError **)error {
   int numCodewords = (int)[codewordBytes count];

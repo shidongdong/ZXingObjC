@@ -20,14 +20,19 @@
 
 @property (nonatomic, strong, readonly) ZXDataMatrixVersion *version;
 
+/**
+ * @param bitMatrix ZXBitMatrix to parse
+ * @return nil if dimension is < 8 or > 144 or not 0 mod 2
+ */
 - (id)initWithBitMatrix:(ZXBitMatrix *)bitMatrix error:(NSError **)error;
+
+/**
+ * Reads the bits in the ZXBitMatrix representing the mapping matrix (No alignment patterns)
+ * in the correct order in order to reconstitute the codewords bytes contained within the
+ * Data Matrix Code.
+ *
+ * @return bytes encoded within the Data Matrix Code or nil if the exact number of bytes expected is not read
+ */
 - (NSArray *)readCodewords;
-- (BOOL)readModule:(int)row column:(int)column numRows:(int)numRows numColumns:(int)numColumns;
-- (int)readUtah:(int)row column:(int)column numRows:(int)numRows numColumns:(int)numColumns;
-- (int)readCorner1:(int)numRows numColumns:(int)numColumns;
-- (int)readCorner2:(int)numRows numColumns:(int)numColumns;
-- (int)readCorner3:(int)numRows numColumns:(int)numColumns;
-- (int)readCorner4:(int)numRows numColumns:(int)numColumns;
-- (ZXBitMatrix *)extractDataRegion:(ZXBitMatrix *)bitMatrix;
 
 @end

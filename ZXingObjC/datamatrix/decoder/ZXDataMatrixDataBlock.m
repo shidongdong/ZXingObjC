@@ -29,11 +29,6 @@
   return self;
 }
 
-/**
- * When Data Matrix Codes use multiple data blocks, they actually interleave the bytes of each of them.
- * That is, the first byte of data block 1 to n is written, then the second bytes, and so on. This
- * method will separate the data into original blocks.
- */
 + (NSArray *)dataBlocks:(NSArray *)rawCodewords version:(ZXDataMatrixVersion *)version {
   ZXDataMatrixECBlocks *ecBlocks = version.ecBlocks;
 

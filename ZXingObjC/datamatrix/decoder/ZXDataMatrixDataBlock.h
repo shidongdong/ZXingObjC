@@ -14,19 +14,28 @@
  * limitations under the License.
  */
 
+@class ZXDataMatrixVersion;
+
 /**
  * Encapsulates a block of data within a Data Matrix Code. Data Matrix Codes may split their data into
  * multiple blocks, each of which is a unit of data and error-correction codewords. Each
  * is represented by an instance of this class.
  */
-
-@class ZXDataMatrixVersion;
-
 @interface ZXDataMatrixDataBlock : NSObject
 
 @property (nonatomic, assign, readonly) int numDataCodewords;
 @property (nonatomic, strong, readonly) NSMutableArray *codewords;
 
+/**
+ * When Data Matrix Codes use multiple data blocks, they actually interleave the bytes of each of them.
+ * That is, the first byte of data block 1 to n is written, then the second bytes, and so on. This
+ * method will separate the data into original blocks.
+ *
+ * @param rawCodewords bytes as read directly from the Data Matrix Code
+ * @param version version of the Data Matrix Code
+ * @return DataBlocks containing original bytes, "de-interleaved" from representation in the
+ *         Data Matrix Code
+ */
 + (NSArray *)dataBlocks:(NSArray *)rawCodewords version:(ZXDataMatrixVersion *)version;
 
 @end

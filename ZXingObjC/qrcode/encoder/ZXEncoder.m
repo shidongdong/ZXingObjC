@@ -18,7 +18,6 @@
 #import "ZXBlockPair.h"
 #import "ZXByteMatrix.h"
 #import "ZXCharacterSetECI.h"
-#import "ZXECI.h"
 #import "ZXEncoder.h"
 #import "ZXEncodeHints.h"
 #import "ZXErrors.h"
@@ -590,7 +589,7 @@ const NSStringEncoding DEFAULT_BYTE_MODE_ENCODING = NSISOLatin1StringEncoding;
   return YES;
 }
 
-+ (void)appendECI:(ZXECI *)eci bits:(ZXBitArray *)bits {
++ (void)appendECI:(ZXCharacterSetECI *)eci bits:(ZXBitArray *)bits {
   [bits appendBits:[[ZXMode eciMode] bits] numBits:4];
   [bits appendBits:[eci value] numBits:8];
 }

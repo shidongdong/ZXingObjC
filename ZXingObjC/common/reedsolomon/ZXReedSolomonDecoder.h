@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@class ZXGenericGF;
+
 /**
  * Implements Reed-Solomon decoding, as the name implies.
  * 
@@ -31,12 +33,19 @@
  * Much credit is due to William Rucklidge since portions of this code are an indirect
  * port of his C++ Reed-Solomon implementation.
  */
-
-@class ZXGenericGF;
-
 @interface ZXReedSolomonDecoder : NSObject
 
 - (id)initWithField:(ZXGenericGF *)field;
+
+/**
+ * Decodes given set of received codewords, which include both data and error-correction
+ * codewords. Really, this means it uses Reed-Solomon to detect and correct errors, in-place,
+ * in the input.
+ *
+ * @param received data and error-correction codewords
+ * @param twoS number of error-correction codewords available
+ * @return NO if decoding fails for any reason
+ */
 - (BOOL)decode:(int *)received receivedLen:(NSUInteger)receivedLen twoS:(int)twoS error:(NSError **)error;
 
 @end

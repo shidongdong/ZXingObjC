@@ -86,6 +86,7 @@ int const LUMINANCE_BUCKETS = 1 << LUMINANCE_BITS;
   int center = localLuminances[1] & 0xff;
   for (int x = 1; x < width - 1; x++) {
     int right = localLuminances[x + 1] & 0xff;
+    // A simple -1 4 -1 box filter with a weight of 2.
     int luminance = ((center << 2) - left - right) >> 1;
     if (luminance < blackPoint) {
       [row set:x];
@@ -104,8 +105,13 @@ int const LUMINANCE_BUCKETS = 1 << LUMINANCE_BITS;
   int height = source.height;
   ZXBitMatrix *matrix = [[ZXBitMatrix alloc] initWithWidth:width height:height];
 
+  // Quickly calculates the histogram by sampling four rows from the image. This proved to be
+  // more robust on the blackbox tests than sampling a diagonal as we used to do.
   [self initArrays:width];
 
+  // We delay reading the entire image luminance until the black point estimation succeeds.
+  // Although we end up reading four rows twice, it is consistent with our motto of
+  // "fail quickly" which is necessary for continuous scanning.
   int *localBuckets = (int *)malloc(LUMINANCE_BUCKETS * sizeof(int));
   memset(localBuckets, 0, LUMINANCE_BUCKETS * sizeof(int));
   for (int y = 1; y < 5; y++) {
@@ -159,6 +165,7 @@ int const LUMINANCE_BUCKETS = 1 << LUMINANCE_BITS;
 }
 
 - (int)estimateBlackPoint:(int *)otherBuckets {
+  // Find the tallest peak in the histogram.
   int numBuckets = LUMINANCE_BUCKETS;
   int maxBucketCount = 0;
   int firstPeak = 0;
@@ -174,10 +181,12 @@ int const LUMINANCE_BUCKETS = 1 << LUMINANCE_BITS;
     }
   }
 
+  // Find the second-tallest peak which is somewhat far from the tallest peak.
   int secondPeak = 0;
   int secondPeakScore = 0;
   for (int x = 0; x < numBuckets; x++) {
     int distanceToBiggest = x - firstPeak;
+    // Encourage more distant second peaks by multiplying by square of distance.
     int score = otherBuckets[x] * distanceToBiggest * distanceToBiggest;
     if (score > secondPeakScore) {
       secondPeak = x;
@@ -185,16 +194,20 @@ int const LUMINANCE_BUCKETS = 1 << LUMINANCE_BITS;
     }
   }
 
+  // Make sure firstPeak corresponds to the black peak.
   if (firstPeak > secondPeak) {
     int temp = firstPeak;
     firstPeak = secondPeak;
     secondPeak = temp;
   }
 
+  // If there is too little contrast in the image to pick a meaningful black point, throw rather
+  // than waste time trying to decode the image, and risk false positives.
   if (secondPeak - firstPeak <= numBuckets >> 4) {
     return -1;
   }
 
+  // Find a valley between them that is low and closer to the white peak.
   int bestValley = secondPeak - 1;
   int bestValleyScore = -1;
   for (int x = secondPeak - 1; x > firstPeak; x--) {

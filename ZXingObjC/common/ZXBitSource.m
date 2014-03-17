@@ -27,10 +27,6 @@
 
 @implementation ZXBitSource
 
-/**
- * bytes is the bytes from which this will read bits. Bits will be read from the first byte first.
- * Bits are read within a byte from most-significant to least-significant bit.
- */
 - (id)initWithBytes:(int8_t *)bytes length:(unsigned int)length {
   if (self = [super init]) {
     _bytes = bytes;
@@ -39,13 +35,15 @@
   return self;
 }
 
-
 - (int)readBits:(int)numBits {
   if (numBits < 1 || numBits > 32 || numBits > self.available) {
     [NSException raise:NSInvalidArgumentException 
                 format:@"Invalid number of bits: %d", numBits];
   }
+
   int result = 0;
+
+  // First, read remainder from current byte
   if (self.bitOffset > 0) {
     int bitsLeft = 8 - self.bitOffset;
     int toRead = numBits < bitsLeft ? numBits : bitsLeft;
@@ -60,6 +58,7 @@
     }
   }
 
+  // Next read whole bytes
   if (numBits > 0) {
     while (numBits >= 8) {
       result = (result << 8) | (self.bytes[self.byteOffset] & 0xFF);
@@ -67,6 +66,7 @@
       numBits -= 8;
     }
 
+    // Finally read a partial byte
     if (numBits > 0) {
       int bitsToNotRead = 8 - numBits;
       int mask = (0xFF >> bitsToNotRead) << bitsToNotRead;
@@ -74,6 +74,7 @@
       self.bitOffset += numBits;
     }
   }
+
   return result;
 }
 
