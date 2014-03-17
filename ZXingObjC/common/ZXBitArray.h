@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@class ZXByteArray;
+
 /**
  * A simple, fast array of bits, represented compactly by an array of ints internally.
  */
@@ -114,7 +116,7 @@
  * @param offset position in array to start writing
  * @param numBytes how many bytes to write
  */
-- (void)toBytes:(int)bitOffset array:(int8_t *)array offset:(int)offset numBytes:(int)numBytes;
+- (void)toBytes:(int)bitOffset array:(ZXByteArray *)array offset:(int)offset numBytes:(int)numBytes;
 
 /**
  * Reverses all bits in the array.

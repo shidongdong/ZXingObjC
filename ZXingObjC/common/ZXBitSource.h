@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@class ZXByteArray;
+
 /**
  * This provides an easy abstraction to read bits at a time from a sequence of bytes, where the
  * number of bits read is not often a multiple of 8.
@@ -37,7 +39,7 @@
  * @param bytes bytes from which this will read bits. Bits will be read from the first byte first.
  * Bits are read within a byte from most-significant to least-significant bit.
  */
-- (id)initWithBytes:(int8_t *)bytes length:(unsigned int)length;
+- (id)initWithBytes:(ZXByteArray *)bytes;
 
 /**
  * @param numBits number of bits to read
