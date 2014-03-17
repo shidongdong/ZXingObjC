@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@class ZXGenericGF;
+@class ZXGenericGF, ZXIntArray;
 
 /**
  * Represents a polynomial whose coefficients are elements of a GF.
@@ -25,8 +25,7 @@
  */
 @interface ZXGenericGFPoly : NSObject
 
-@property (nonatomic, assign, readonly) int *coefficients;
-@property (nonatomic, assign, readonly) int coefficientsLen;
+@property (nonatomic, strong, readonly) ZXIntArray *coefficients;
 
 /**
  * @param field the {@link GenericGF} instance representing the field to use
@@ -34,7 +33,7 @@
  * @param coefficients coefficients as ints representing elements of GF(size), arranged
  * from most significant (highest-power term) coefficient to least significant
  */
-- (id)initWithField:(ZXGenericGF *)field coefficients:(int *)coefficients coefficientsLen:(NSUInteger)coefficientsLen;
+- (id)initWithField:(ZXGenericGF *)field coefficients:(ZXIntArray *)coefficients;
 
 /**
  * @return degree of this polynomial

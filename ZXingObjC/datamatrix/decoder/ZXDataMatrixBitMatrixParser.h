@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@class ZXBitMatrix, ZXDataMatrixVersion;
+@class ZXBitMatrix, ZXByteArray, ZXDataMatrixVersion;
 
 @interface ZXDataMatrixBitMatrixParser : NSObject
 
@@ -33,6 +33,6 @@
  *
  * @return bytes encoded within the Data Matrix Code or nil if the exact number of bytes expected is not read
  */
-- (NSArray *)readCodewords;
+- (ZXByteArray *)readCodewords;
 
 @end

@@ -89,7 +89,6 @@
   }
   ZXResult *result = [ZXResult resultWithText:decoderResult.text
                                      rawBytes:decoderResult.rawBytes
-                                       length:decoderResult.length
                                  resultPoints:points
                                        format:kBarcodeFormatDataMatrix];
   if (decoderResult.byteSegments != nil) {

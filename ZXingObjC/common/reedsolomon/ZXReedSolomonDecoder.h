@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@class ZXGenericGF;
+@class ZXGenericGF, ZXIntArray;
 
 /**
  * Implements Reed-Solomon decoding, as the name implies.
@@ -46,6 +46,6 @@
  * @param twoS number of error-correction codewords available
  * @return NO if decoding fails for any reason
  */
-- (BOOL)decode:(int *)received receivedLen:(NSUInteger)receivedLen twoS:(int)twoS error:(NSError **)error;
+- (BOOL)decode:(ZXIntArray *)received twoS:(int)twoS error:(NSError **)error;
 
 @end

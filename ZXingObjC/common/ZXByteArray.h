@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 ZXing authors
+ * Copyright 2014 ZXing authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-@class ZXByteArray, ZXDecoderResult;
+@interface ZXByteArray : NSObject
 
-/**
- * Data Matrix Codes can encode text as bits in one of several modes, and can use multiple modes
- * in one Data Matrix Code. This class decodes the bits back into text.
- *
- * See ISO 16022:2006, 5.2.1 - 5.2.9.2
- */
-@interface ZXDataMatrixDecodedBitStreamParser : NSObject
+@property (nonatomic, assign, readonly) int8_t *array;
+@property (nonatomic, assign, readonly) unsigned int length;
 
-+ (ZXDecoderResult *)decode:(ZXByteArray *)bytes error:(NSError **)error;
+- (id)initWithLength:(unsigned int)length;
+- (id)initWithBytes:(int8_t)byte1, ...;
 
 @end

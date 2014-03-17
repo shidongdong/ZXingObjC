@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@class ZXDataMatrixVersion;
+@class ZXByteArray, ZXDataMatrixVersion;
 
 /**
  * Encapsulates a block of data within a Data Matrix Code. Data Matrix Codes may split their data into
@@ -24,7 +24,7 @@
 @interface ZXDataMatrixDataBlock : NSObject
 
 @property (nonatomic, assign, readonly) int numDataCodewords;
-@property (nonatomic, strong, readonly) NSMutableArray *codewords;
+@property (nonatomic, strong, readonly) ZXByteArray *codewords;
 
 /**
  * When Data Matrix Codes use multiple data blocks, they actually interleave the bytes of each of them.
@@ -36,6 +36,6 @@
  * @return DataBlocks containing original bytes, "de-interleaved" from representation in the
  *         Data Matrix Code
  */
-+ (NSArray *)dataBlocks:(NSArray *)rawCodewords version:(ZXDataMatrixVersion *)version;
++ (NSArray *)dataBlocks:(ZXByteArray *)rawCodewords version:(ZXDataMatrixVersion *)version;
 
 @end

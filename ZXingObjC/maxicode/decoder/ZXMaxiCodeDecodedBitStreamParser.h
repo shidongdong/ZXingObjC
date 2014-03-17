@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@class ZXDecoderResult;
+@class ZXByteArray, ZXDecoderResult;
 
 /**
  * MaxiCodes can encode text or structured information as bits in one of several modes,
@@ -22,6 +22,6 @@
  */
 @interface ZXMaxiCodeDecodedBitStreamParser : NSObject
 
-+ (ZXDecoderResult *)decode:(int8_t *)bytes length:(unsigned int)length mode:(int)mode;
++ (ZXDecoderResult *)decode:(ZXByteArray *)bytes mode:(int)mode;
 
 @end
