@@ -27,8 +27,8 @@
 
 @property (nonatomic, strong, readonly) ZXGenericGFPoly *zero;
 @property (nonatomic, strong, readonly) ZXGenericGFPoly *one;
-@property (nonatomic, assign, readonly) int size;
-@property (nonatomic, assign, readonly) int generatorBase;
+@property (nonatomic, assign, readonly) int32_t size;
+@property (nonatomic, assign, readonly) int32_t generatorBase;
 
 + (ZXGenericGF *)AztecData12;
 + (ZXGenericGF *)AztecData10;
@@ -62,26 +62,26 @@
  *
  * @return sum/difference of a and b
  */
-+ (int)addOrSubtract:(int)a b:(int)b;
++ (int32_t)addOrSubtract:(int32_t)a b:(int32_t)b;
 
 /**
  * @return 2 to the power of a in GF(size)
  */
-- (int)exp:(int)a;
+- (int32_t)exp:(int)a;
 
 /**
  * @return base 2 log of a in GF(size)
  */
-- (int)log:(int)a;
+- (int32_t)log:(int)a;
 
 /**
  * @return multiplicative inverse of a
  */
-- (int)inverse:(int)a;
+- (int32_t)inverse:(int)a;
 
 /**
  * @return product of a and b in GF(size)
  */
-- (int)multiply:(int)a b:(int)b;
+- (int32_t)multiply:(int)a b:(int)b;
 
 @end
